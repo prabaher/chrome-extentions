@@ -1,10 +1,10 @@
 // F1 Car Background Images (supports jpg, jpeg, png, webp)
 const backgroundImages = [
-    'images/f1-car-1',
-    'images/f1-car-2',
-    'images/f1-car-3',
-    'images/f1-car-4',
-    'images/f1-car-5'
+    'images/img-1',
+    'images/img-2',
+    'images/img-3',
+    'images/img-4',
+    'images/img-5'
 ];
 
 // Try to load image with different extensions
