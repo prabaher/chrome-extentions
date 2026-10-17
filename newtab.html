@@ -23,20 +23,28 @@
         </div>
     </div>
     
-    <button class="shortcuts-toggle-btn" id="shortcutsToggleBtn" title="Toggle Shortcuts">
-        <svg class="arrow-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <polyline points="9 18 15 12 9 6"></polyline>
-        </svg>
-    </button>
-    
-    <div class="shortcuts-container" id="shortcutsContainer">
-        <div class="shortcuts-grid" id="shortcutsGrid"></div>
-        <button class="add-shortcut-btn" id="addShortcutBtn" title="Add Shortcut">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <line x1="12" y1="5" x2="12" y2="19"></line>
-                <line x1="5" y1="12" x2="19" y2="12"></line>
+    <div class="sidebar-wrapper" id="sidebarWrapper">
+        <button class="shortcuts-toggle-btn" id="shortcutsToggleBtn" title="Toggle Shortcuts" aria-label="Toggle Shortcuts">
+            <svg class="arrow-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="9 18 15 12 9 6"></polyline>
             </svg>
         </button>
+
+        <button class="shortcuts-toggle-btn button2"  title="Toggle Shortcuts" aria-label="Toggle Shortcuts">
+            <svg class="arrow-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+        </button>
+        
+        <div class="shortcuts-container" id="shortcutsContainer">
+            <div class="shortcuts-grid" id="shortcutsGrid"></div>
+            <button class="add-shortcut-btn" id="addShortcutBtn" title="Add Shortcut" aria-label="Add Shortcut">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+            </button>
+        </div>
     </div>
     
     <div class="add-shortcut-modal" id="addShortcutModal">

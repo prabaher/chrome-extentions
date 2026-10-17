@@ -153,6 +153,7 @@ function removeShortcut(index) {
 function initShortcuts() {
     renderShortcuts();
     
+    const sidebarWrapper = document.getElementById('sidebarWrapper');
     const toggleBtn = document.getElementById('shortcutsToggleBtn');
     const shortcutsContainer = document.getElementById('shortcutsContainer');
     const addBtn = document.getElementById('addShortcutBtn');
@@ -162,28 +163,80 @@ function initShortcuts() {
     const nameInput = document.getElementById('shortcutName');
     const urlInput = document.getElementById('shortcutUrl');
     
-    // Toggle shortcuts visibility
-    toggleBtn.addEventListener('click', () => {
-        const isVisible = shortcutsContainer.classList.contains('show');
-        if (isVisible) {
+    let closeTimeout = null;
+    
+    function openSidebar() {
+        if (closeTimeout) {
+            clearTimeout(closeTimeout);
+            closeTimeout = null;
+        }
+        if (sidebarWrapper) sidebarWrapper.classList.add('open');
+        shortcutsContainer.classList.add('show');
+        toggleBtn.classList.add('active');
+    }
+    
+    function closeSidebar(immediate = false) {
+        if (closeTimeout) {
+            clearTimeout(closeTimeout);
+            closeTimeout = null;
+        }
+        
+        // Keep sidebar open while modal is displayed
+        if (modal && modal.classList.contains('active')) {
+            return;
+        }
+        
+        const executeClose = () => {
+            if (sidebarWrapper) sidebarWrapper.classList.remove('open');
             shortcutsContainer.classList.remove('show');
             toggleBtn.classList.remove('active');
+        };
+        
+        if (immediate) {
+            executeClose();
         } else {
-            shortcutsContainer.classList.add('show');
-            toggleBtn.classList.add('active');
+            closeTimeout = setTimeout(executeClose, 250);
+        }
+    }
+    
+    // Open on hover over the left side / sidebar wrapper
+    if (sidebarWrapper) {
+        sidebarWrapper.addEventListener('mouseenter', openSidebar);
+        sidebarWrapper.addEventListener('mouseleave', () => closeSidebar(false));
+    } else {
+        toggleBtn.addEventListener('mouseenter', openSidebar);
+        toggleBtn.addEventListener('mouseleave', () => closeSidebar(false));
+        shortcutsContainer.addEventListener('mouseenter', openSidebar);
+        shortcutsContainer.addEventListener('mouseleave', () => closeSidebar(false));
+    }
+    
+    // Toggle shortcuts on click (convenient toggle/pin fallback)
+    toggleBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = shortcutsContainer.classList.contains('show');
+        if (isOpen) {
+            closeSidebar(true);
+        } else {
+            openSidebar();
         }
     });
     
-    addBtn.addEventListener('click', () => {
+    function closeModal() {
+        modal.classList.remove('active');
+        if (sidebarWrapper && !sidebarWrapper.matches(':hover')) {
+            closeSidebar(false);
+        }
+    }
+    
+    addBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
         modal.classList.add('active');
         nameInput.value = '';
         urlInput.value = '';
         nameInput.focus();
     });
     
-    cancelBtn.addEventListener('click', () => {
-        modal.classList.remove('active');
-    });
+    cancelBtn.addEventListener('click', closeModal);
     
     saveBtn.addEventListener('click', () => {
         const name = nameInput.value.trim();
@@ -202,12 +255,12 @@ function initShortcuts() {
         shortcuts.push({ name, url });
         saveShortcuts(shortcuts);
         renderShortcuts();
-        modal.classList.remove('active');
+        closeModal();
     });
     
     modal.addEventListener('click', (e) => {
         if (e.target === modal) {
-            modal.classList.remove('active');
+            closeModal();
         }
     });
     

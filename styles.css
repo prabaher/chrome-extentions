@@ -137,12 +137,12 @@ body {
     left: 50%;
     transform: translateX(-50%);
     width: 0;
-    height: 2px;
+    height: 3px;
     background: linear-gradient(90deg, 
         transparent,
-        #ff0000,
-        #ff6b00,
-        #ff0000,
+        #312e2e,
+        #2c2c2c,
+        #3f3838,
         transparent
     );
     transition: width 0.3s ease;
@@ -152,15 +152,31 @@ body {
     width: 80%;
 }
 
+/* Sidebar Wrapper for Left-Side Hover & Shortcuts */
+.sidebar-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 40px;
+    z-index: 20;
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sidebar-wrapper:hover,
+.sidebar-wrapper.open {
+    width: 175px;
+}
+
 /* Shortcuts Toggle Button */
 .shortcuts-toggle-btn {
     position: fixed;
-    top: 30px;
+    top: 90px;
     left: -10px;
-    z-index: 11;
+    z-index: 22;
     width: 40px;
     height: 40px;
-    background:transparent;
+    background: transparent;
     backdrop-filter: blur(10px);
     border: none;
     border-radius: 50%;
@@ -173,20 +189,44 @@ body {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
-.shortcuts-toggle-btn:hover {
+.shortcuts-toggle-btn:hover,
+.sidebar-wrapper:hover .shortcuts-toggle-btn,
+.sidebar-wrapper.open .shortcuts-toggle-btn {
     background: rgba(30, 30, 30, 0.9);
     border-color: rgba(255, 0, 0, 0.4);
     color: rgba(255, 0, 0, 0.8);
     transform: scale(1.1);
     box-shadow: 0 6px 16px rgba(255, 0, 0, 0.2);
 }
-
-.shortcuts-toggle-btn.active {
+.button2{
+    position: fixed;
+    top:555px;
+    left: -10px;
+    z-index: 22;
+    width: 40px;
+    height: 40px;
+    background: transparent;
+    backdrop-filter: blur(10px);
+    border: none;
+    border-radius: 50%;
+    color: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+.shortcuts-toggle-btn.active,
+.sidebar-wrapper:hover .shortcuts-toggle-btn,
+.sidebar-wrapper.open .shortcuts-toggle-btn {
     border-color: rgba(255, 0, 0, 0.5);
     color: rgba(255, 0, 0, 0.9);
 }
 
-.shortcuts-toggle-btn.active .arrow-icon {
+.shortcuts-toggle-btn.active .arrow-icon,
+.sidebar-wrapper:hover .shortcuts-toggle-btn .arrow-icon,
+.sidebar-wrapper.open .shortcuts-toggle-btn .arrow-icon {
     transform: rotate(180deg);
 }
 
@@ -201,8 +241,8 @@ body {
     position: fixed;
     top: 30px;
     left: 30px;
-    z-index: 10;
-    display: none;
+    z-index: 21;
+    display: flex;
     flex-direction: column;
     gap: 15px;
     max-height: calc(100vh - 60px);
@@ -210,22 +250,22 @@ body {
     overflow-x: hidden;
     padding-right: 5px;
     padding-left: 50px;
-    animation: slideInLeft 0.3s ease-out;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-15px);
+    pointer-events: none;
+    transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                visibility 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.shortcuts-container.show {
-    display: flex;
-}
-
-@keyframes slideInLeft {
-    from {
-        opacity: 0;
-        transform: translateX(-20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
+.shortcuts-container.show,
+.sidebar-wrapper:hover .shortcuts-container,
+.sidebar-wrapper.open .shortcuts-container {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+    pointer-events: auto;
 }
 
 /* Custom Scrollbar for Shortcuts */
@@ -499,6 +539,15 @@ body {
     
     #searchInput {
         font-size: 14px;
+    }
+    
+    .sidebar-wrapper {
+        width: 55px;
+    }
+    
+    .sidebar-wrapper:hover,
+    .sidebar-wrapper.open {
+        width: 150px;
     }
     
     .shortcuts-toggle-btn {
